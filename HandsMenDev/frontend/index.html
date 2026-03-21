@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HandsMen Threads — CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ink: #0a0906;
+  --paper: #f5f0e8;
+  --cream: #ede7d5;
+  --gold: #c9a84c;
+  --gold-light: #e8c96a;
+  --gold-pale: #f5e9c4;
+  --rust: #8b3a2a;
+  --sage: #4a6741;
+  --slate: #2c3e50;
+  --smoke: #6b6560;
+  --fog: #b5afa5;
+  --white: #fffdf8;
+  --sidebar-w: 260px;
+  --radius: 2px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body {
+  font-family:'Outfit',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  min-height:100vh;
+  display:flex;
+  overflow-x:hidden;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width:var(--sidebar-w);
+  background:var(--ink);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  position:fixed;
+  top:0;left:0;bottom:0;
+  z-index:100;
+  border-right:1px solid #1e1c18;
+}
+
+.sidebar-logo {
+  padding:36px 28px 28px;
+  border-bottom:1px solid #1e1c18;
+}
+.sidebar-logo .brand {
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;
+  font-weight:300;
+  color:var(--gold);
+  letter-spacing:0.08em;
+  line-height:1.2;
+}
+.sidebar-logo .brand em {
+  display:block;
+  font-size:11px;
+  font-family:'DM Mono',monospace;
+  color:var(--smoke);
+  font-style:normal;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  margin-top:4px;
+}
+
+.sidebar-nav {
+  padding:24px 0;
+  flex:1;
+}
+
+.nav-section-label {
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:#3a3730;
+  padding:0 28px;
+  margin:20px 0 8px;
+}
+
+.nav-item {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:11px 28px;
+  cursor:pointer;
+  transition:all 0.2s;
+  border-left:2px solid transparent;
+  font-size:13.5px;
+  font-weight:300;
+  color:#8a8278;
+  text-decoration:none;
+  position:relative;
+}
+.nav-item svg{width:16px;height:16px;flex-shrink:0;opacity:0.6;}
+.nav-item:hover{color:var(--cream);background:rgba(255,255,255,0.04);}
+.nav-item.active{
+  color:var(--gold);
+  border-left-color:var(--gold);
+  background:rgba(201,168,76,0.07);
+}
+.nav-item.active svg{opacity:1;}
+.nav-badge {
+  margin-left:auto;
+  background:var(--rust);
+  color:#fff;
+  font-size:9px;
+  font-family:'DM Mono',monospace;
+  padding:2px 6px;
+  border-radius:10px;
+}
+
+.sidebar-footer {
+  padding:20px 28px;
+  border-top:1px solid #1e1c18;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.avatar {
+  width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--rust));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:14px;color:white;font-weight:600;
+  flex-shrink:0;
+}
+.avatar-info{flex:1;min-width:0;}
+.avatar-name{font-size:12.5px;font-weight:400;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.avatar-role{font-size:10px;color:var(--smoke);font-family:'DM Mono',monospace;letter-spacing:0.05em;}
+
+/* ── MAIN ── */
+.main {
+  margin-left:var(--sidebar-w);
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+.topbar {
+  background:var(--white);
+  border-bottom:1px solid var(--cream);
+  padding:0 40px;
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;top:0;z-index:50;
+}
+.topbar-left{display:flex;align-items:center;gap:16px;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;letter-spacing:0.02em;}
+.page-subtitle{font-size:12px;color:var(--fog);font-family:'DM Mono',monospace;letter-spacing:0.08em;}
+.topbar-right{display:flex;align-items:center;gap:12px;}
+
+.btn {
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 20px;
+  border:none;cursor:pointer;
+  font-family:'Outfit',sans-serif;
+  font-size:12.5px;font-weight:400;
+  border-radius:var(--radius);
+  transition:all 0.2s;
+  text-decoration:none;
+}
+.btn-primary{background:var(--ink);color:var(--gold);letter-spacing:0.05em;}
+.btn-primary:hover{background:#1a1814;transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+.btn-ghost{background:transparent;color:var(--smoke);border:1px solid var(--cream);}
+.btn-ghost:hover{border-color:var(--fog);color:var(--ink);}
+
+.notif-btn {
+  width:36px;height:36px;border-radius:50%;
+  background:var(--cream);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;transition:background 0.2s;
+}
+.notif-btn:hover{background:var(--gold-pale);}
+.notif-dot{
+  position:absolute;top:6px;right:6px;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--rust);border:2px solid var(--white);
+}
+
+.content {
+  padding:40px;
+  flex:1;
+}
+
+/* ── STATS ROW ── */
+.stats-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+  margin-bottom:36px;
+}
+
+.stat-card {
+  background:var(--white);
+  border:1px solid var(--cream);
+  padding:28px;
+  position:relative;
+  overflow:hidden;
+  cursor:default;
+  transition:all 0.3s;
+}
+.stat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--gold);transform:scaleX(0);transform-origin:left;
+  transition:transform 0.3s;
+}
+.stat-card:hover::before{transform:scaleX(1);}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.08);}
+
+.stat-label{
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--fog);
+  margin-bottom:12px;
+}
+.stat-value{
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;font-weight:300;
+  color:var(--ink);line-height:1;
+  margin-bottom:8px;
+}
+.stat-delta{
+  font-size:12px;font-family:'DM Mono',monospace;
+  display:flex;align-items:center;gap:6px;
+}
+.delta-up{color:var(--sage);}
+.delta-down{color:var(--rust);}
+.stat-icon{
+  position:absolute;right:24px;top:24px;
+  width:36px;height:36px;
+  background:var(--cream);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;
+}
+
+/* ── GRID LAYOUT ── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;}
+.grid-3-2{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;margin-bottom:24px;}
+
+/* ── PANELS ── */
+.panel {
+  background:var(--white);
+  border:1px solid var(--cream);
+  overflow:hidden;
+}
+.panel-header{
+  padding:22px 28px 18px;
+  border-bottom:1px solid var(--cream);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.panel-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-weight:400;letter-spacing:0.02em;
+}
+.panel-body{padding:0;}
+.panel-action{
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--gold);
+  background:none;border:none;cursor:pointer;
+  transition:color 0.2s;
+}
+.panel-action:hover{color:var(--rust);}
+
+/* ── TABLE ── */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+thead th{
+  font-family:'DM Mono',monospace;
+  font-size:9.5px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--fog);
+  padding:14px 28px;text-align:left;
+  border-bottom:1px solid var(--cream);
+  background:var(--paper);
+}
+tbody tr{
+  border-bottom:1px solid var(--cream);
+  transition:background 0.15s;
+}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:var(--paper);}
+tbody td{
+  padding:16px 28px;
+  font-size:13.5px;font-weight:300;
+  color:var(--ink);
+}
+
+.badge {
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 10px;border-radius:20px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:0.05em;
+  font-weight:500;
+}
+.badge::before{content:'';width:5px;height:5px;border-radius:50%;}
+.badge-confirmed{background:#e8f5e9;color:#2e7d32;}.badge-confirmed::before{background:#2e7d32;}
+.badge-shipped{background:#e3f2fd;color:#1565c0;}.badge-shipped::before{background:#1565c0;}
+.badge-delivered{background:var(--gold-pale);color:#7a5c0a;}.badge-delivered::before{background:var(--gold);}
+.badge-draft{background:var(--cream);color:var(--smoke);}.badge-draft::before{background:var(--fog);}
+.badge-gold{background:var(--gold-pale);color:#7a5c0a;}
+.badge-silver{background:#f0f0f0;color:#555;}
+.badge-platinum{background:#ede8f8;color:#4a1d96;}
+.badge-bronze{background:#fdf3e8;color:#92400e;}
+.badge-low{background:#fee2e2;color:#991b1b;}.badge-low::before{background:#ef4444;}
+
+/* ── LOYALTY CHART ── */
+.loyalty-rings{display:flex;flex-direction:column;gap:16px;padding:24px 28px;}
+.loyalty-row{display:flex;align-items:center;gap:14px;}
+.loyalty-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--smoke);width:60px;}
+.loyalty-bar-wrap{flex:1;height:6px;background:var(--cream);border-radius:3px;overflow:hidden;}
+.loyalty-bar{height:100%;border-radius:3px;transition:width 1s ease;}
+.bar-platinum{background:linear-gradient(90deg,#7c3aed,#a78bfa);}
+.bar-gold{background:linear-gradient(90deg,var(--gold),var(--gold-light));}
+.bar-silver{background:linear-gradient(90deg,#94a3b8,#cbd5e1);}
+.bar-bronze{background:linear-gradient(90deg,#92400e,#d97706);}
+.loyalty-count{font-family:'DM Mono',monospace;font-size:11px;color:var(--fog);width:30px;text-align:right;}
+
+/* ── STOCK ALERTS ── */
+.alert-list{display:flex;flex-direction:column;}
+.alert-item{
+  display:flex;align-items:center;gap:16px;
+  padding:18px 28px;
+  border-bottom:1px solid var(--cream);
+  transition:background 0.15s;
+}
+.alert-item:last-child{border-bottom:none;}
+.alert-item:hover{background:var(--paper);}
+.alert-dot{
+  width:10px;height:10px;border-radius:50%;flex-shrink:0;
+  animation:pulse 2s infinite;
+}
+.alert-dot.critical{background:var(--rust);}
+.alert-dot.warning{background:var(--gold);}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.3);opacity:0.7;}}
+.alert-name{flex:1;font-size:13.5px;font-weight:300;}
+.alert-stock{font-family:'DM Mono',monospace;font-size:12px;color:var(--smoke);}
+
+/* ── ACTIVITY FEED ── */
+.activity-feed{padding:4px 0;}
+.activity-item{
+  display:flex;gap:16px;
+  padding:14px 28px;
+  position:relative;
+}
+.activity-item::after{
+  content:'';position:absolute;
+  left:44px;top:42px;bottom:0;
+  width:1px;background:var(--cream);
+}
+.activity-item:last-child::after{display:none;}
+.activity-icon{
+  width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;flex-shrink:0;margin-top:2px;
+  border:1px solid var(--cream);background:var(--white);
+}
+.activity-body{flex:1;}
+.activity-text{font-size:13px;font-weight:300;line-height:1.5;color:var(--ink);}
+.activity-text strong{font-weight:500;}
+.activity-time{font-family:'DM Mono',monospace;font-size:10px;color:var(--fog);margin-top:3px;}
+
+/* ── MINI CHART (SVG sparkline) ── */
+.sparkline-wrap{padding:16px 28px 24px;}
+.chart-labels{display:flex;justify-content:space-between;margin-bottom:8px;}
+.chart-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--fog);letter-spacing:0.1em;}
+.chart-value-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);}
+
+/* ── AUTOMATION STATUS ── */
+.auto-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--cream);}
+.auto-item{
+  padding:20px 24px;
+  border-right:1px solid var(--cream);
+  border-bottom:1px solid var(--cream);
+  transition:background 0.2s;
+  cursor:pointer;
+}
+.auto-item:nth-child(2n){border-right:none;}
+.auto-item:nth-child(3),.auto-item:nth-child(4){border-bottom:none;}
+.auto-item:hover{background:var(--paper);}
+.auto-status{
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:8px;
+}
+.status-pill{
+  display:flex;align-items:center;gap:5px;
+  font-family:'DM Mono',monospace;font-size:9px;
+  padding:3px 8px;border-radius:12px;
+  letter-spacing:0.05em;
+}
+.status-active{background:#dcfce7;color:#166534;}
+.status-active::before{content:'●';font-size:7px;animation:pulse 1.5s infinite;}
+.status-scheduled{background:var(--gold-pale);color:#7a5c0a;}
+.auto-name{font-size:13px;font-weight:400;color:var(--ink);margin-bottom:3px;}
+.auto-desc{font-size:11.5px;color:var(--smoke);font-weight:300;line-height:1.4;}
+
+/* ── SEARCH BAR ── */
+.search-wrap{position:relative;width:240px;}
+.search-input{
+  width:100%;padding:9px 16px 9px 36px;
+  border:1px solid var(--cream);border-radius:var(--radius);
+  background:var(--paper);color:var(--ink);
+  font-family:'Outfit',sans-serif;font-size:13px;
+  outline:none;transition:border-color 0.2s;
+}
+.search-input:focus{border-color:var(--fog);}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--fog);}
+
+/* ── DECORATIVE ── */
+.grain{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  pointer-events:none;z-index:999;opacity:0.018;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.fade-up{animation:fadeUp 0.5s ease both;}
+.delay-1{animation-delay:0.05s;}
+.delay-2{animation-delay:0.1s;}
+.delay-3{animation-delay:0.15s;}
+.delay-4{animation-delay:0.2s;}
+.delay-5{animation-delay:0.25s;}
+.delay-6{animation-delay:0.3s;}
+
+/* ── TOP ACCENT LINE ── */
+.accent-rule{
+  height:1px;background:linear-gradient(90deg,var(--gold),transparent);
+  margin-bottom:0;
+}
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(10,9,6,0.7);
+  z-index:200;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity 0.3s;
+  backdrop-filter:blur(4px);
+}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{
+  background:var(--white);width:520px;max-width:90vw;
+  border:1px solid var(--cream);
+  transform:translateY(20px);transition:transform 0.3s;
+}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-header{
+  padding:28px 32px 20px;
+  border-bottom:1px solid var(--cream);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;}
+.modal-close{background:none;border:none;cursor:pointer;color:var(--fog);font-size:20px;line-height:1;}
+.modal-close:hover{color:var(--ink);}
+.modal-body{padding:28px 32px;}
+.form-group{margin-bottom:20px;}
+.form-label{
+  display:block;
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--smoke);margin-bottom:8px;
+}
+.form-input,.form-select{
+  width:100%;padding:10px 14px;
+  border:1px solid var(--cream);background:var(--paper);
+  color:var(--ink);font-family:'Outfit',sans-serif;font-size:13.5px;
+  outline:none;transition:border-color 0.2s;border-radius:var(--radius);
+}
+.form-input:focus,.form-select:focus{border-color:var(--gold);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.modal-footer{
+  padding:20px 32px 28px;
+  display:flex;gap:12px;justify-content:flex-end;
+  border-top:1px solid var(--cream);
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="brand">
+      HandsMen Threads
+      <em>CRM Platform</em>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Overview</div>
+    <a class="nav-item active" href="#" onclick="showSection('dashboard')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="#" onclick="showSection('orders')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+      Orders
+      <span class="nav-badge">12</span>
+    </a>
+    <a class="nav-item" href="#" onclick="showSection('customers')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      Customers
+    </a>
+    <a class="nav-item" href="#" onclick="showSection('inventory')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+      Inventory
+      <span class="nav-badge">3</span>
+    </a>
+
+    <div class="nav-section-label">Automation</div>
+    <a class="nav-item" href="#" onclick="showSection('automation')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      Flows & Triggers
+    </a>
+    <a class="nav-item" href="#" onclick="showSection('scheduler')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      Scheduler
+    </a>
+
+    <div class="nav-section-label">Analytics</div>
+    <a class="nav-item" href="#">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      Reports
+    </a>
+    <a class="nav-item" href="#">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+      Loyalty
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="avatar">A</div>
+    <div class="avatar-info">
+      <div class="avatar-name">Admin User</div>
+      <div class="avatar-role">Salesforce Admin</div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="accent-rule"></div>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div>
+        <div class="page-title" id="pageTitle">Dashboard</div>
+        <div class="page-subtitle" id="pageSubtitle">SATURDAY · 21 MARCH 2026</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="search-wrap">
+        <svg class="search-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input class="search-input" placeholder="Search anything..."/>
+      </div>
+      <button class="notif-btn">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <div class="notif-dot"></div>
+      </button>
+      <button class="btn btn-primary" onclick="openModal()">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        New Order
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- DASHBOARD SECTION -->
+    <div id="section-dashboard">
+      <!-- STATS -->
+      <div class="stats-grid">
+        <div class="stat-card fade-up">
+          <div class="stat-icon">💰</div>
+          <div class="stat-label">Total Revenue</div>
+          <div class="stat-value">₹8.4M</div>
+          <div class="stat-delta delta-up">↑ 18.2% vs last month</div>
+        </div>
+        <div class="stat-card fade-up delay-1">
+          <div class="stat-icon">📦</div>
+          <div class="stat-label">Orders This Month</div>
+          <div class="stat-value">1,247</div>
+          <div class="stat-delta delta-up">↑ 9.4% vs last month</div>
+        </div>
+        <div class="stat-card fade-up delay-2">
+          <div class="stat-icon">👤</div>
+          <div class="stat-label">Active Customers</div>
+          <div class="stat-value">3,891</div>
+          <div class="stat-delta delta-up">↑ 12.1% growth</div>
+        </div>
+        <div class="stat-card fade-up delay-3">
+          <div class="stat-icon">⚠️</div>
+          <div class="stat-label">Low Stock Items</div>
+          <div class="stat-value">3</div>
+          <div class="stat-delta delta-down">↓ Needs restocking</div>
+        </div>
+      </div>
+
+      <!-- ORDERS + LOYALTY -->
+      <div class="grid-3-2 fade-up delay-4">
+        <!-- Recent Orders -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Recent Orders</div>
+            <button class="panel-action" onclick="showSection('orders')">View all →</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>#ORD-4821</td><td>Aryan Mehta</td><td>₹12,400</td><td><span class="badge badge-delivered">Delivered</span></td></tr>
+                <tr><td>#ORD-4820</td><td>Priya Sharma</td><td>₹8,750</td><td><span class="badge badge-shipped">Shipped</span></td></tr>
+                <tr><td>#ORD-4819</td><td>Rohit Verma</td><td>₹21,000</td><td><span class="badge badge-confirmed">Confirmed</span></td></tr>
+                <tr><td>#ORD-4818</td><td>Neha Kapoor</td><td>₹4,200</td><td><span class="badge badge-shipped">Shipped</span></td></tr>
+                <tr><td>#ORD-4817</td><td>Vikram Singh</td><td>₹9,800</td><td><span class="badge badge-draft">Draft</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Loyalty Breakdown -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Loyalty Tiers</div>
+            <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--fog);">3,891 customers</span>
+          </div>
+          <div class="loyalty-rings">
+            <div class="loyalty-row">
+              <span class="loyalty-label">Platinum</span>
+              <div class="loyalty-bar-wrap"><div class="loyalty-bar bar-platinum" style="width:15%"></div></div>
+              <span class="loyalty-count">584</span>
+            </div>
+            <div class="loyalty-row">
+              <span class="loyalty-label">Gold</span>
+              <div class="loyalty-bar-wrap"><div class="loyalty-bar bar-gold" style="width:28%"></div></div>
+              <span class="loyalty-count">1,090</span>
+            </div>
+            <div class="loyalty-row">
+              <span class="loyalty-label">Silver</span>
+              <div class="loyalty-bar-wrap"><div class="loyalty-bar bar-silver" style="width:35%"></div></div>
+              <span class="loyalty-count">1,362</span>
+            </div>
+            <div class="loyalty-row">
+              <span class="loyalty-label">Bronze</span>
+              <div class="loyalty-bar-wrap"><div class="loyalty-bar bar-bronze" style="width:22%"></div></div>
+              <span class="loyalty-count">855</span>
+            </div>
+          </div>
+          <!-- Revenue Sparkline -->
+          <div style="border-top:1px solid var(--cream);">
+            <div class="sparkline-wrap">
+              <div class="chart-labels">
+                <span class="chart-label">Revenue trend (7d)</span>
+                <span class="chart-value-label">↑ ₹8.4M</span>
+              </div>
+              <svg width="100%" height="64" viewBox="0 0 300 64">
+                <defs>
+                  <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,52 L43,44 L86,38 L129,46 L172,28 L215,18 L258,10 L300,4 L300,64 L0,64 Z" fill="url(#sparkGrad)"/>
+                <path d="M0,52 L43,44 L86,38 L129,46 L172,28 L215,18 L258,10 L300,4" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+                <circle cx="300" cy="4" r="3" fill="#c9a84c"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVITY + AUTOMATION -->
+      <div class="grid-2 fade-up delay-5">
+        <!-- Activity Feed -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Live Activity</div>
+            <span class="status-pill status-active">Live</span>
+          </div>
+          <div class="activity-feed">
+            <div class="activity-item">
+              <div class="activity-icon">📧</div>
+              <div class="activity-body">
+                <div class="activity-text"><strong>Order confirmation email</strong> sent to Aryan Mehta for #ORD-4821</div>
+                <div class="activity-time">2 minutes ago · Flow triggered</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">⭐</div>
+              <div class="activity-body">
+                <div class="activity-text"><strong>Priya Sharma</strong> upgraded to Gold loyalty tier</div>
+                <div class="activity-time">14 minutes ago · Apex trigger</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">⚠️</div>
+              <div class="activity-body">
+                <div class="activity-text"><strong>Stock alert</strong> fired for Classic Linen Blazer (2 units left)</div>
+                <div class="activity-time">1 hour ago · Apex trigger</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">🕛</div>
+              <div class="activity-body">
+                <div class="activity-text"><strong>Bulk order batch</strong> processed — 94 orders updated, inventory adjusted</div>
+                <div class="activity-time">Today at 00:00 · Scheduled Apex</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">📧</div>
+              <div class="activity-body">
+                <div class="activity-text"><strong>Order confirmation email</strong> sent to Rohit Verma for #ORD-4819</div>
+                <div class="activity-time">3 hours ago · Flow triggered</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Automation Status -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Automation Status</div>
+          </div>
+          <div class="auto-grid">
+            <div class="auto-item">
+              <div class="auto-status"><span class="status-pill status-active">Active</span></div>
+              <div class="auto-name">Order Confirmation</div>
+              <div class="auto-desc">Email sent on order confirm via Record-Triggered Flow</div>
+            </div>
+            <div class="auto-item">
+              <div class="auto-status"><span class="status-pill status-active">Active</span></div>
+              <div class="auto-name">Loyalty Updates</div>
+              <div class="auto-desc">Tier recalculated after each delivered order</div>
+            </div>
+            <div class="auto-item">
+              <div class="auto-status"><span class="status-pill status-active">Active</span></div>
+              <div class="auto-name">Stock Alerts</div>
+              <div class="auto-desc">Warehouse email when stock drops below 5 units</div>
+            </div>
+            <div class="auto-item">
+              <div class="auto-status"><span class="status-pill status-scheduled">Scheduled</span></div>
+              <div class="auto-name">Bulk Processor</div>
+              <div class="auto-desc">Runs daily at midnight via Scheduled Apex</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INVENTORY SECTION -->
+    <div id="section-inventory" style="display:none;">
+      <div class="panel fade-up">
+        <div class="panel-header">
+          <div class="panel-title">Inventory — Stock Levels</div>
+          <button class="btn btn-ghost" style="font-size:12px;">Export CSV</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Product</th><th>SKU</th><th>Price</th><th>Stock</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Classic Linen Blazer</td><td>HMT-BLZ-001</td><td>₹4,500</td><td>2</td><td><span class="badge badge-low">Critical</span></td></tr>
+              <tr><td>Slim Fit Chinos</td><td>HMT-CHN-004</td><td>₹1,800</td><td>3</td><td><span class="badge badge-low">Critical</span></td></tr>
+              <tr><td>Oxford Button-Down</td><td>HMT-SHT-007</td><td>₹1,200</td><td>4</td><td><span class="badge badge-low">Critical</span></td></tr>
+              <tr><td>Merino Wool Sweater</td><td>HMT-SWT-012</td><td>₹3,200</td><td>18</td><td><span class="badge badge-confirmed">In Stock</span></td></tr>
+              <tr><td>Leather Derby Shoes</td><td>HMT-SHO-019</td><td>₹6,800</td><td>24</td><td><span class="badge badge-confirmed">In Stock</span></td></tr>
+              <tr><td>Polo Pique T-Shirt</td><td>HMT-TSH-022</td><td>₹900</td><td>87</td><td><span class="badge badge-confirmed">In Stock</span></td></tr>
+              <tr><td>Tailored Suit Jacket</td><td>HMT-SUT-031</td><td>₹12,000</td><td>11</td><td><span class="badge badge-confirmed">In Stock</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUSTOMERS SECTION -->
+    <div id="section-customers" style="display:none;">
+      <div class="panel fade-up">
+        <div class="panel-header">
+          <div class="panel-title">Customer Profiles</div>
+          <button class="btn btn-ghost" style="font-size:12px;">Export</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Name</th><th>Email</th><th>Total Spend</th><th>Orders</th><th>Loyalty</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Aryan Mehta</td><td>aryan@email.com</td><td>₹142,000</td><td>28</td><td><span class="badge badge-platinum">Platinum</span></td></tr>
+              <tr><td>Priya Sharma</td><td>priya@email.com</td><td>₹87,500</td><td>19</td><td><span class="badge badge-gold">Gold</span></td></tr>
+              <tr><td>Rohit Verma</td><td>rohit@email.com</td><td>₹54,200</td><td>12</td><td><span class="badge badge-gold">Gold</span></td></tr>
+              <tr><td>Neha Kapoor</td><td>neha@email.com</td><td>₹21,000</td><td>7</td><td><span class="badge badge-silver">Silver</span></td></tr>
+              <tr><td>Vikram Singh</td><td>vikram@email.com</td><td>₹8,400</td><td>3</td><td><span class="badge badge-bronze">Bronze</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDERS SECTION -->
+    <div id="section-orders" style="display:none;">
+      <div class="panel fade-up">
+        <div class="panel-header">
+          <div class="panel-title">All Orders</div>
+          <button class="btn btn-primary" onclick="openModal()">+ New Order</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Order ID</th><th>Customer</th><th>Date</th><th>Amount</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>#ORD-4821</td><td>Aryan Mehta</td><td>21 Mar 2026</td><td>₹12,400</td><td><span class="badge badge-delivered">Delivered</span></td></tr>
+              <tr><td>#ORD-4820</td><td>Priya Sharma</td><td>20 Mar 2026</td><td>₹8,750</td><td><span class="badge badge-shipped">Shipped</span></td></tr>
+              <tr><td>#ORD-4819</td><td>Rohit Verma</td><td>20 Mar 2026</td><td>₹21,000</td><td><span class="badge badge-confirmed">Confirmed</span></td></tr>
+              <tr><td>#ORD-4818</td><td>Neha Kapoor</td><td>19 Mar 2026</td><td>₹4,200</td><td><span class="badge badge-shipped">Shipped</span></td></tr>
+              <tr><td>#ORD-4817</td><td>Vikram Singh</td><td>18 Mar 2026</td><td>₹9,800</td><td><span class="badge badge-draft">Draft</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- AUTOMATION SECTION -->
+    <div id="section-automation" style="display:none;">
+      <div class="stats-grid fade-up">
+        <div class="stat-card"><div class="stat-label">Flows Fired Today</div><div class="stat-value">47</div><div class="stat-delta delta-up">↑ All successful</div></div>
+        <div class="stat-card"><div class="stat-label">Emails Sent</div><div class="stat-value">312</div><div class="stat-delta delta-up">↑ This month</div></div>
+        <div class="stat-card"><div class="stat-label">Apex Jobs</div><div class="stat-value">8</div><div class="stat-delta delta-up">↑ All passed</div></div>
+        <div class="stat-card"><div class="stat-label">Trigger Executions</div><div class="stat-value">2.1K</div><div class="stat-delta delta-up">↑ This week</div></div>
+      </div>
+      <div class="panel fade-up delay-2">
+        <div class="panel-header"><div class="panel-title">All Automations</div></div>
+        <table><thead><tr><th>Name</th><th>Type</th><th>Trigger</th><th>Status</th><th>Last Run</th></tr></thead>
+        <tbody>
+          <tr><td>OrderConfirmationFlow</td><td>Record-Triggered Flow</td><td>Order status = Confirmed</td><td><span class="badge badge-confirmed">Active</span></td><td>2 min ago</td></tr>
+          <tr><td>LoyaltyStatusTrigger</td><td>Apex Trigger</td><td>After Order insert/update</td><td><span class="badge badge-confirmed">Active</span></td><td>14 min ago</td></tr>
+          <tr><td>StockAlertTrigger</td><td>Apex Trigger</td><td>After Product update</td><td><span class="badge badge-confirmed">Active</span></td><td>1 hour ago</td></tr>
+          <tr><td>BulkOrderScheduler</td><td>Scheduled Apex</td><td>Daily at 00:00</td><td><span class="badge badge-delivered">Scheduled</span></td><td>Today 00:00</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- SCHEDULER SECTION -->
+    <div id="section-scheduler" style="display:none;">
+      <div class="panel fade-up">
+        <div class="panel-header"><div class="panel-title">Scheduled Jobs</div></div>
+        <table><thead><tr><th>Job Name</th><th>Class</th><th>Cron</th><th>Next Run</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Bulk Order Midnight Job</td><td>BulkOrderScheduler</td><td>0 0 0 * * ?</td><td>22 Mar 2026, 00:00</td><td><span class="badge badge-delivered">Scheduled</span></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+
+<!-- NEW ORDER MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">New Order</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Customer</label>
+          <select class="form-select">
+            <option>Aryan Mehta</option>
+            <option>Priya Sharma</option>
+            <option>Rohit Verma</option>
+            <option>Neha Kapoor</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Order Date</label>
+          <input class="form-input" type="date" value="2026-03-21"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Product</label>
+        <select class="form-select">
+          <option>Classic Linen Blazer — ₹4,500</option>
+          <option>Slim Fit Chinos — ₹1,800</option>
+          <option>Oxford Button-Down — ₹1,200</option>
+          <option>Merino Wool Sweater — ₹3,200</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Quantity</label>
+          <input class="form-input" type="number" value="1" min="1"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select">
+            <option>Draft</option>
+            <option>Confirmed</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitOrder()">Create Order</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Navigation
+function showSection(name) {
+  const sections = ['dashboard','orders','customers','inventory','automation','scheduler'];
+  sections.forEach(s => {
+    const el = document.getElementById('section-'+s);
+    if(el) el.style.display = (s===name)?'block':'none';
+  });
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  const titles = {dashboard:'Dashboard',orders:'Orders',customers:'Customers',inventory:'Inventory',automation:'Flows & Triggers',scheduler:'Scheduler'};
+  document.getElementById('pageTitle').textContent = titles[name]||name;
+}
+
+// Modal
+function openModal(){document.getElementById('modalOverlay').classList.add('open');}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
+function closeModalOnBg(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+function submitOrder(){
+  alert('✅ Order created! Confirmation email will be sent automatically via Salesforce Flow.');
+  closeModal();
+}
+
+// Animate loyalty bars on load
+window.addEventListener('load',()=>{
+  document.querySelectorAll('.loyalty-bar').forEach(b=>{
+    const w=b.style.width;b.style.width='0';
+    setTimeout(()=>{b.style.width=w;},300);
+  });
+  // Set today's date in subtitle
+  const d=new Date();
+  const days=['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+  const months=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+  document.getElementById('pageSubtitle').textContent=`${days[d.getDay()]} · ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+});
+</script>
+</body>
+</html>
