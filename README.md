@@ -1,9 +1,10 @@
 # 🧵 HandsMen Threads — Salesforce CRM Project
 
 > A complete, production-ready Salesforce CRM system built for **HandsMen Threads**, a dynamic fashion organization. This project automates key business workflows including order confirmations, customer loyalty management, inventory alerts, and bulk order processing.
-
+[![Live Demo](https://img.shields.io/badge/Live-Dashboard-gold?style=for-the-badge&logo=github)](https://deugayakwad15.github.io/HandsMenThreads-Salesforce/HandsMenDev/frontend/)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/deugayakwad15/HandsMenThreads-Salesforce)
+[![Salesforce](https://img.shields.io/badge/Salesforce-CRM-00A1E0?style=for-the-badge&logo=salesforce)](https://developer.salesforce.com)
 ---
-
 ## 📌 Table of Contents
 
 - [Project Overview](#project-overview)
@@ -338,23 +339,6 @@ StockAlertTrigger       88%+ ✅
 | 🌐 Live Dashboard | [View Here](https://deugayakwad15.github.io/HandsMenThreads-Salesforce/HandsMenDev/frontend/) |
 | 💻 GitHub Repo | [View Code](https://github.com/deugayakwad15/HandsMenThreads-Salesforce) |
 | 📄 Solution Design Doc | Available in repository root |
-[![Live Demo](https://img.shields.io/badge/Live-Dashboard-gold?style=for-the-badge&logo=github)](https://deugayakwad15.github.io/HandsMenThreads-Salesforce/HandsMenDev/frontend/)
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/deugayakwad15/HandsMenThreads-Salesforce)
-[![Salesforce](https://img.shields.io/badge/Salesforce-CRM-00A1E0?style=for-the-badge&logo=salesforce)](https://developer.salesforce.com)
-```
-
-This shows **clickable badges** at the top of your README like this:
-```
-[🟡 Live Dashboard]  [🔵 GitHub Repository]  [🔵 Salesforce CRM]
-```
-
----
-
-## How to Take a Screenshot for Preview
-
-1. Open your live dashboard:
-```
-https://deugayakwad15.github.io/HandsMenThreads-Salesforce/HandsMenDev/frontend/
 
 ---
 
