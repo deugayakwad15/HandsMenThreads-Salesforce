@@ -1,10 +1,13 @@
 # 🧵 HandsMen Threads — Salesforce CRM Project
 
-> A complete, production-ready Salesforce CRM system built for **HandsMen Threads**, a dynamic fashion organization. This project automates key business workflows including order confirmations, customer loyalty management, inventory alerts, and bulk order processing.
 [![Live Demo](https://img.shields.io/badge/Live-Dashboard-gold?style=for-the-badge&logo=github)](https://deugayakwad15.github.io/HandsMenThreads-Salesforce/HandsMenDev/frontend/)
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/deugayakwad15/HandsMenThreads-Salesforce)
 [![Salesforce](https://img.shields.io/badge/Salesforce-CRM-00A1E0?style=for-the-badge&logo=salesforce)](https://developer.salesforce.com)
+
+ A complete, production-ready Salesforce CRM system built for **HandsMen Threads**, a dynamic fashion organization. This project automates key business workflows including order confirmations, customer loyalty management, inventory alerts, and bulk order processing.
+
 ---
+
 ## 📌 Table of Contents
 
 - [Project Overview](#project-overview)
