@@ -304,6 +304,58 @@ StockAlertTrigger       88%+ ✅
 - ✅ **Salesforce Lightning** — Lightning App Builder, custom objects UI
 - ✅ **Version Control** — Git, GitHub, SFDX project structure
 
+## 🌐 Live Demo
+
+👉 **[Click here to view the live CRM Dashboard](https://deugayakwad15.github.io/HandsMenThreads-Salesforce/HandsMenDev/frontend/)**
+
+> Open the link above to see the fully working frontend dashboard
+> built for HandsMen Threads CRM — no login required!
+
+---
+
+## 📸 Dashboard Preview
+
+### Main Dashboard
+![Dashboard](https://deugayakwad15.github.io/HandsMenThreads-Salesforce/HandsMenDev/frontend/preview.png)
+
+### Key Screens
+
+| Screen | Description |
+|---|---|
+| 📊 Dashboard | Revenue stats, recent orders, loyalty tiers, live activity feed |
+| 📦 Orders | Full order table with status badges and New Order modal |
+| 👤 Customers | Customer profiles with Bronze/Silver/Gold/Platinum badges |
+| 📦 Inventory | Stock levels with Critical/In Stock indicators |
+| ⚡ Automation | Live status of all 4 Salesforce automations |
+| 🕛 Scheduler | Scheduled Apex job monitoring |
+
+---
+
+## 🔗 Quick Links
+
+| Resource | Link |
+|---|---|
+| 🌐 Live Dashboard | [View Here](https://deugayakwad15.github.io/HandsMenThreads-Salesforce/HandsMenDev/frontend/) |
+| 💻 GitHub Repo | [View Code](https://github.com/deugayakwad15/HandsMenThreads-Salesforce) |
+| 📄 Solution Design Doc | Available in repository root |
+[![Live Demo](https://img.shields.io/badge/Live-Dashboard-gold?style=for-the-badge&logo=github)](https://deugayakwad15.github.io/HandsMenThreads-Salesforce/HandsMenDev/frontend/)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/deugayakwad15/HandsMenThreads-Salesforce)
+[![Salesforce](https://img.shields.io/badge/Salesforce-CRM-00A1E0?style=for-the-badge&logo=salesforce)](https://developer.salesforce.com)
+```
+
+This shows **clickable badges** at the top of your README like this:
+```
+[🟡 Live Dashboard]  [🔵 GitHub Repository]  [🔵 Salesforce CRM]
+```
+
+---
+
+## How to Take a Screenshot for Preview
+
+1. Open your live dashboard:
+```
+https://deugayakwad15.github.io/HandsMenThreads-Salesforce/HandsMenDev/frontend/
+
 ---
 
 ## 👩‍💻 Developer
