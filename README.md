@@ -38,15 +38,15 @@ The project was built entirely on the **Salesforce Platform** using industry-sta
 
 ---
 
-## ✨ Features
+## Features
 
-### 1. 📧 Automated Order Confirmation Emails
+### 1. Automated Order Confirmation Emails
 - **Trigger:** When an order status is changed to `Confirmed`
 - **Action:** Customer automatically receives a confirmation email
 - **Built with:** Record-Triggered Flow (no code needed)
 - **Benefit:** Improves customer experience and reduces manual work
 
-### 2. ⭐ Dynamic Loyalty Program
+### 2. Dynamic Loyalty Program
 - **Trigger:** After an order is marked as `Delivered`
 - **Action:** Customer loyalty tier is recalculated based on total spend
 - **Tiers:**
@@ -56,13 +56,13 @@ The project was built entirely on the **Salesforce Platform** using industry-sta
   - 💎 Platinum → Total spend ₹10,000+
 - **Built with:** Apex Trigger (`LoyaltyStatusTrigger`)
 
-### 3. ⚠️ Proactive Stock Alerts
+### 3. Proactive Stock Alerts
 - **Trigger:** When product stock drops below 5 units
 - **Action:** Automatic email alert sent to the warehouse team
 - **Smart logic:** Only fires when stock CROSSES the threshold (not on every update)
 - **Built with:** Apex Trigger (`StockAlertTrigger`)
 
-### 4. 🕛 Scheduled Bulk Order Processing
+### 4. Scheduled Bulk Order Processing
 - **Trigger:** Every day at midnight (00:00)
 - **Action:** All confirmed orders are processed, marked as Shipped, and inventory is updated
 - **Built with:** Scheduled Apex (`BulkOrderScheduler`)
@@ -118,7 +118,7 @@ Customer__c  ──(1:Many)──  Order__c  ──(1:Many)──  Order_Line_It
 
 ---
 
-## ⚡ Automation & Apex
+## Automation & Apex
 
 ### Apex Triggers
 
@@ -153,7 +153,7 @@ Customer__c  ──(1:Many)──  Order__c  ──(1:Many)──  Order_Line_It
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 HandsMenThreads-Salesforce/
@@ -195,7 +195,7 @@ HandsMenThreads-Salesforce/
 
 ---
 
-## 🚀 Setup & Deployment
+## Setup & Deployment
 
 ### Prerequisites
 Make sure you have these installed:
@@ -244,11 +244,11 @@ System.schedule(
 
 - Go to **Setup** → **Flows**
 - Find `Send_Order_Confirmation`
-- Click **Activate** ✅
+- Click **Activate** 
 
 ---
 
-## 🧪 Running Tests
+##  Running Tests
 
 Run all test classes with coverage report:
 
@@ -261,24 +261,24 @@ sf apex run test --test-level RunLocalTests --result-format human --code-coverag
 ```
 TEST NAME                                      OUTCOME
 ──────────────────────────────────────────────────────
-BulkOrderSchedulerTest.testScheduleJob          Pass ✅
-BulkOrderSchedulerTest.testBulkProcessing       Pass ✅
-BulkOrderSchedulerTest.testEmptyRun             Pass ✅
-LoyaltyStatusTriggerTest.testBronzeTier         Pass ✅
-LoyaltyStatusTriggerTest.testGoldTier           Pass ✅
-LoyaltyStatusTriggerTest.testPlatinumTier       Pass ✅
-StockAlertTriggerTest.testAlertFired            Pass ✅
-StockAlertTriggerTest.testNoAlertIfAlreadyLow   Pass ✅
-StockAlertTriggerTest.testNoAlertAboveThreshold Pass ✅
+BulkOrderSchedulerTest.testScheduleJob          Pass
+BulkOrderSchedulerTest.testBulkProcessing       Pass 
+BulkOrderSchedulerTest.testEmptyRun             Pass 
+LoyaltyStatusTriggerTest.testBronzeTier         Pass 
+LoyaltyStatusTriggerTest.testGoldTier           Pass 
+LoyaltyStatusTriggerTest.testPlatinumTier       Pass 
+StockAlertTriggerTest.testAlertFired            Pass 
+StockAlertTriggerTest.testNoAlertIfAlreadyLow   Pass 
+StockAlertTriggerTest.testNoAlertAboveThreshold Pass 
 
 CODE COVERAGE
 ──────────────────────────
-BulkOrderScheduler      90%+ ✅
-LoyaltyStatusTrigger    85%+ ✅
-StockAlertTrigger       88%+ ✅
+BulkOrderScheduler      90%+ 
+LoyaltyStatusTrigger    85%+ 
+StockAlertTrigger       88%+ 
 ```
 
-> ✅ Salesforce requires minimum **75% code coverage** to deploy — this project exceeds that requirement.
+>  Salesforce requires minimum **75% code coverage** to deploy — this project exceeds that requirement.
 
 ---
 
@@ -299,25 +299,25 @@ StockAlertTrigger       88%+ ✅
 
 ## 🎯 Skills Demonstrated
 
-- ✅ **Data Modelling** — Custom objects, fields, relationships, formula fields
-- ✅ **Data Quality** — Validation rules, required fields, unique constraints
-- ✅ **Apex Programming** — Triggers, classes, SOQL, DML operations
-- ✅ **Asynchronous Apex** — Schedulable interface, batch processing
-- ✅ **Flow Designer** — Record-triggered flows, email actions
-- ✅ **Test-Driven Development** — Test classes with 75%+ coverage
-- ✅ **Salesforce Lightning** — Lightning App Builder, custom objects UI
-- ✅ **Version Control** — Git, GitHub, SFDX project structure
+-  **Data Modelling** — Custom objects, fields, relationships, formula fields
+-  **Data Quality** — Validation rules, required fields, unique constraints
+-  **Apex Programming** — Triggers, classes, SOQL, DML operations
+-  **Asynchronous Apex** — Schedulable interface, batch processing
+-  **Flow Designer** — Record-triggered flows, email actions
+-  **Test-Driven Development** — Test classes with 75%+ coverage
+-  **Salesforce Lightning** — Lightning App Builder, custom objects UI
+-  **Version Control** — Git, GitHub, SFDX project structure
 
-## 🌐 Live Demo
+## Live Demo
 
-👉 **[Click here to view the live CRM Dashboard](https://deugayakwad15.github.io/HandsMenThreads-Salesforce/HandsMenDev/frontend/)**
+**[Click here to view the live CRM Dashboard](https://deugayakwad15.github.io/HandsMenThreads-Salesforce/HandsMenDev/frontend/)**
 
 > Open the link above to see the fully working frontend dashboard
 > built for HandsMen Threads CRM — no login required!
 
 ---
 
-## 📸 Dashboard Preview
+##  Dashboard Preview
 
 ### Main Dashboard
 ![Dashboard](https://deugayakwad15.github.io/HandsMenThreads-Salesforce/HandsMenDev/frontend/preview.png)
