@@ -345,9 +345,9 @@ StockAlertTrigger       88%+ ✅
 
 ---
 
-## 👩‍💻 Developer
+## 👩‍💻Salesforce Developer
 
-**Divyani Ugayakwad**
+**Divyani Gayakwad**
 - GitHub: [@deugayakwad15](https://github.com/deugayakwad15)
 
 ---
